@@ -1,2 +1,4 @@
 # Projektuppgift
-Projektuppgift python
+Projektuppgift i python
+
+Chattprogram via sockets
