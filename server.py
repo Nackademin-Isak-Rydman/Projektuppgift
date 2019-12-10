@@ -1,13 +1,28 @@
 import socket 
 import _thread
+import threading
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print_lock = threading.Lock()
 
-client_list = []
+def if_threaded(c):
 
-host = '127.0.0.1'
+    while True:
+        data = c.recv(1024)
+        if not data:
+            print("Hejdå")
+            print_lock.release()
+            break
+
+        data = data[::-1]
+        c.send(data)
+
+    c.close()
+
+host = ""
 port = 12345
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind((host, port))
+print("socket bunden till port", port)
 
-server.bind((host, port))
-print('Sockets binded to port: ', port)
-server.listen(10)
+sock.listen(4)
+
