@@ -24,5 +24,14 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.bind((host, port))
 print("socket bunden till port", port)
 
-sock.listen(4)
+sock.listen(5)
+print("socket lyssnar")
 
+while True:
+    c, addr = sock.accept()
+
+    print_lock.acquire()
+    print("ansluten till: ", addr[0], ":", addr[1])
+
+    _thread.start_new_thread(if_threaded, (c,))
+sock.close()
